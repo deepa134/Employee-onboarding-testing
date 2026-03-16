@@ -1,0 +1,332 @@
+/* Modern global theme and utilities - safely replaces minimal styles
+	 - preserves `.app-card` and `.btn` usages so existing markup won't break
+*/
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+:root {
+	/* Colors - lighter professional palette (not white background) */
+	--bg: linear-gradient(180deg,#eef6ff 0%, #f8fbff 100%); /* soft pale blue background */
+	--surface: #ffffff; /* card surfaces remain light */
+	--text: #0b2740; /* deep navy for readable text */
+	--muted: #5b7287; /* slate-muted */
+	--accent: #2563eb; /* strong blue accent */
+	--accent-variant: #1d4ed8;
+	--success: #10b981;
+	--danger: #ef4444;
+
+	/* Additional subtle brand tones (minimal palette) */
+	--brand-1: #0ea5a4; /* teal */
+	--brand-2: #7c3aed; /* violet */
+	--glass: rgba(255,255,255,0.6);
+
+	/* Spacing & radius */
+	--radius: 8px;
+	--card-border-color: #E2E8F0;
+	--gap: 16px;
+
+	/* Elevation */
+	--card-border: rgba(15,23,42,0.06);
+	--shadow: 0 6px 18px rgba(15,23,42,0.08);
+
+	--max-width: 1100px;
+}
+
+/* Reset + sensible defaults */
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100%}
+body{
+	margin:0;
+	font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+	background:var(--bg);
+	color:var(--text);
+	-webkit-font-smoothing:antialiased;
+	-moz-osx-font-smoothing:grayscale;
+	line-height:1.45;
+}
+
+/* Page container to center app content */
+.container{max-width:var(--max-width);margin:0 auto;padding:28px}
+
+/* Card — keeps compatibility with existing use of .app-card */
+.app-card{
+	background:var(--surface);
+	border-radius:var(--radius);
+	padding:20px;
+	width:100%;
+	max-width:320px; /* preserves original width intent but allows responsiveness */
+	border:1px solid var(--card-border-color);
+	box-shadow:0 8px 20px rgba(11,38,64,0.04);
+}
+
+/* Buttons — neutral, accessible, and modern */
+.btn{
+	display:inline-flex;
+	align-items:center;
+	gap:8px;
+	padding:8px 14px;
+	background:var(--accent);
+	color:#fff;
+	border:none;
+	border-radius:8px;
+	font-weight:600;
+	cursor:pointer;
+	text-decoration:none;
+	transition:transform .08s ease, box-shadow .12s ease, background-color .12s ease;
+}
+.btn:hover{transform:translateY(-1px);background:var(--accent-variant)}
+.btn:active{transform:translateY(0)}
+.btn:focus{outline:2px solid rgba(37,99,235,0.18);outline-offset:2px}
+
+/* Secondary / ghost button variant — keeps old visual affordances if used */
+.btn.secondary{background:transparent;color:var(--accent);border:1px solid rgba(37,99,235,0.12)}
+
+/* Utility helpers */
+.row{display:flex;flex-wrap:wrap;gap:var(--gap)}
+.col{flex:1 1 0;min-width:0}
+.center{display:flex;align-items:center;justify-content:center}
+.stack{display:flex;flex-direction:column;gap:var(--gap)}
+.text-muted{color:var(--muted)}
+.muted{opacity:.85}
+.small{font-size:.9rem}
+
+/* Form controls */
+input[type="text"],input[type="email"],input[type="password"],select,textarea{
+	width:100%;
+	padding:10px 12px;
+	border:1px solid rgba(11,38,64,0.06);
+	border-radius:8px;
+	background:#ffffff;
+	color:var(--text);
+}
+input:focus,select:focus,textarea:focus{outline:2px solid rgba(125,211,252,0.12);outline-offset:2px}
+
+/* Responsive tweaks */
+@media (max-width:720px){
+	.container{padding:18px}
+	.app-card{max-width:100%}
+}
+
+/* Accessibility helpers */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* Small, non-invasive global tweaks so existing flows remain identical */
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* keep a simple utility for form action rows used in many forms */
+.form-actions{display:flex;gap:12px;justify-content:flex-end;align-items:center}
+
+/* Typography scale */
+h1{font-size:1.6rem;margin:.25rem 0;color:var(--text);font-weight:700}
+h2{font-size:1.25rem;margin:.25rem 0;font-weight:700}
+h3{font-size:1.05rem;margin:.25rem 0;font-weight:600}
+.lead{font-size:1.02rem;color:var(--muted);margin-bottom:8px}
+
+/* Header / Nav (non-invasive) */
+.app-header{
+	background:linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+	padding:12px 20px;
+	display:flex;align-items:center;justify-content:space-between;gap:12px;
+	border-bottom:1px solid rgba(255,255,255,0.04);
+}
+.brand{font-weight:700;color:var(--accent);display:inline-flex;align-items:center;gap:8px}
+.nav{display:flex;gap:12px;align-items:center}
+
+/* Badges and avatars */
+.badge{display:inline-block;padding:4px 8px;border-radius:999px;background:rgba(37,99,235,0.08);color:var(--accent);font-weight:600;font-size:0.78rem}
+.avatar{width:40px;height:40px;border-radius:50%;display:inline-block;overflow:hidden;background:linear-gradient(135deg,var(--brand-1),var(--brand-2));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700}
+
+/* Table/Lists */
+table{width:100%;border-collapse:collapse;font-size:.95rem}
+table th,table td{padding:10px 12px;text-align:left;border-bottom:1px solid rgba(11,38,64,0.04)}
+table thead th{font-weight:600;color:var(--muted);font-size:.85rem}
+table tr:nth-child(even){background:linear-gradient(transparent, rgba(15,23,42,0.01))}
+
+/* Link underline animation */
+.link-underline{position:relative;color:var(--accent);text-decoration:none}
+.link-underline::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:2px;background:linear-gradient(90deg,var(--accent),var(--brand-2));transform:scaleX(0);transform-origin:left;transition:transform .18s ease}
+.link-underline:hover::after{transform:scaleX(1)}
+
+/* subtle motion */
+.fade-in{animation:fadeIn .28s ease both}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* More button variants while preserving .btn */
+.btn.ghost{background:transparent;color:var(--text);border:1px solid rgba(15,23,42,0.06)}
+.btn.round{border-radius:999px;padding:8px 12px}
+
+/* compact card variant used sparingly */
+.app-card--compact{padding:12px;max-width:420px}
+
+/* subtle form label style */
+.form-label{display:block;font-size:.9rem;color:var(--muted);margin-bottom:6px}
+
+/* end of theme */
+
+/* Auth / login specific tweaks */
+.auth-page{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.auth-card{max-width:420px;width:100%}
+.role-toggle .btn{background:transparent;color:var(--text);border:1px solid rgba(15,23,42,0.06)}
+.role-toggle .btn.active{background:var(--accent);color:#fff;border-color:transparent}
+.form-control{padding:10px 12px;border-radius:8px;border:1px solid rgba(11,38,64,0.06);background:#ffffff;color:var(--text)}
+.form-control:focus{outline:2px solid rgba(37,99,235,0.12)}
+
+/* small screens: make auth look good */
+@media (max-width:480px){
+	.auth-card{padding:16px}
+}
+
+/* Dashboard layout */
+.page{padding:28px}
+.page-header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}
+.page-title{margin:0}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+.card-item{background:var(--surface);border:1px solid var(--card-border-color);border-radius:var(--radius);padding:18px;box-shadow:0 8px 20px rgba(11,38,64,0.04)}
+.card-item{transition:transform .18s ease,box-shadow .18s ease}
+.card-item:hover{transform:translateY(-6px);box-shadow:0 16px 36px rgba(11,38,64,0.06)}
+.card-actions{display:flex;gap:8px;align-items:center;margin-top:12px}
+.chip{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(15,23,42,0.04);font-weight:600;color:var(--muted);font-size:.86rem}
+.muted{color:var(--muted)}
+
+/* small helpers to replace inline black buttons */
+button.btn-black{background:linear-gradient(90deg,var(--brand-2),var(--brand-1));color:#fff}
+button.btn-ghost{background:transparent;color:var(--text);border:1px solid rgba(11,38,64,0.06)}
+
+/* side panel for details */
+.side-panel{position:fixed;top:20px;right:20px;width:360px;background:var(--surface);padding:18px;border-radius:10px;border:1px solid rgba(11,38,64,0.04);box-shadow:0 10px 30px rgba(11,38,64,0.06);z-index:40}
+
+/* button color variants */
+.btn.success{background:var(--success);color:#fff}
+.btn.danger{background:var(--danger);color:#fff}
+.btn.secondary{background:transparent;color:var(--muted);border:1px solid rgba(15,23,42,0.06)}
+
+/* Decorative soft background blobs to add depth without changing markup */
+body::before, body::after{
+	content:"";
+	position:fixed;
+	pointer-events:none;
+	z-index:0;
+	filter:blur(48px);
+	opacity:0.85;
+}
+body::before{
+	width:560px;height:560px;right:-120px;top:-120px;background:radial-gradient(circle at 30% 30%, rgba(124,58,237,0.18), rgba(124,58,237,0.06) 40%, transparent 60%);
+}
+body::after{
+	width:480px;height:480px;left:-100px;bottom:-100px;background:radial-gradient(circle at 70% 70%, rgba(14,165,164,0.12), rgba(14,165,164,0.04) 40%, transparent 65%);
+}
+
+/* Brand mark for header: subtle circular emblem before .brand */
+.brand::before{content:"";display:inline-block;width:36px;height:36px;border-radius:50%;margin-right:8px;background:conic-gradient(from 120deg, var(--brand-2), var(--brand-1));box-shadow:0 6px 18px rgba(11,38,64,0.06);vertical-align:middle}
+
+/* Slightly lift header items for contrast */
+.page-header{background:var(--surface);padding:18px;border-radius:12px;border:1px solid rgba(11,38,64,0.04);box-shadow:0 6px 18px rgba(11,38,64,0.04)}
+
+/* Make links and inline actions feel tactile */
+.card-actions button{transition:transform .12s ease,box-shadow .12s ease}
+.card-actions button:hover{transform:translateY(-3px)}
+
+/* Slightly dim decorative blobs on small screens to avoid visual clutter */
+@media (max-width:720px){
+	body::before, body::after{opacity:0.45;filter:blur(36px)}
+}
+
+/* --------------------------
+	 Professional Dashboard UI
+	 - Sidebar + main grid
+	 - Metric cards / KPI tiles
+	 - Status chips + progress bars
+	 - Non-invasive: components can opt-in using the classes below
+	 -------------------------- */
+
+.dashboard-shell{display:grid;grid-template-columns:260px 1fr;gap:22px;align-items:start}
+@media (max-width:980px){.dashboard-shell{grid-template-columns:1fr;}}
+
+.sidebar{background:var(--surface);border-radius:12px;padding:18px;border:1px solid rgba(11,38,64,0.04);box-shadow:0 10px 28px rgba(11,38,64,0.04)}
+.sidebar .nav-item{display:flex;align-items:center;gap:12px;padding:10px;border-radius:8px;color:var(--muted);cursor:pointer}
+.sidebar .nav-item:hover{background:linear-gradient(90deg, rgba(37,99,235,0.04), rgba(124,58,237,0.02));color:var(--accent);font-weight:600}
+.sidebar .section-title{font-size:.9rem;color:var(--muted);margin-top:12px;margin-bottom:8px}
+
+.main-panel{min-height:320px}
+
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:18px}
+@media (max-width:1100px){.metrics{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:580px){.metrics{grid-template-columns:1fr}}
+
+.metric-card{background:var(--surface);border-radius:var(--radius);padding:18px;border:1px solid var(--card-border-color);box-shadow:0 8px 20px rgba(11,38,64,0.04);display:flex;flex-direction:column;justify-content:space-between;transition:transform .12s ease,box-shadow .12s ease}
+.metric-card:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(11,38,64,0.06)}
+.metric-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.metric-icon{width:48px;height:48px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff}
+.metric-value{font-size:1.6rem;font-weight:700;color:var(--text);margin-top:10px}
+.metric-label{color:var(--muted);font-size:.92rem}
+
+.sparkline{height:36px;border-radius:6px;background:linear-gradient(90deg, rgba(37,99,235,0.12), rgba(124,58,237,0.06));overflow:hidden}
+
+/* Status chips for onboarding states */
+.status-chip{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;font-weight:700;font-size:.82rem}
+.status-chip.pending{background:rgba(245,158,11,0.12);color:#b45309}
+.status-chip.verified{background:rgba(16,185,129,0.12);color:#059669}
+.status-chip.rejected{background:rgba(239,68,68,0.10);color:#b91c1c}
+
+/* Progress bar used in HR lists */
+.progress{height:10px;background:linear-gradient(90deg, rgba(15,23,42,0.04), rgba(15,23,42,0.02));border-radius:999px;overflow:hidden}
+.progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--brand-2),var(--brand-1));width:0;transition:width .8s cubic-bezier(.2,.9,.2,1)}
+
+/* Compact KPI row for smaller cards */
+.kpi-row{display:flex;align-items:center;gap:12px}
+.kpi-title{color:var(--muted);font-weight:600}
+.kpi-number{font-size:1.25rem;font-weight:700}
+
+/* Table accent: subtle colored left border for selected rows */
+table tr.selected{border-left:4px solid rgba(37,99,235,0.12)}
+
+/* Utility: small card footer for actions */
+.card-footer{display:flex;justify-content:space-between;align-items:center;margin-top:12px;color:var(--muted);font-size:.92rem}
+
+/* Make sure decorative elements don't block content */
+body *{position:relative;z-index:1}
+
+
+/* Stepper / Timeline / Action CSS (final polish) */
+.progress-sidebar{background:var(--surface);border:1px solid var(--card-border-color);border-radius:var(--radius);padding:18px;box-shadow:0 6px 18px rgba(11,38,64,0.04)}
+.progress-sidebar .steps{display:flex;flex-direction:column;gap:10px;max-height:calc(100vh - 160px);overflow:auto;padding-right:6px}
+.progress-step{display:flex;align-items:flex-start;gap:12px}
+.progress-step .marker{width:32px;height:32px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;border:2px solid var(--card-border-color);background:#F8FAFF;color:var(--muted);font-weight:700}
+.progress-step.completed .marker{background:#ECFDF5;border-color:var(--success);color:#059669}
+.progress-step.active .marker{background:linear-gradient(90deg,var(--accent),var(--accent-variant));color:#fff;box-shadow:0 0 0 8px rgba(79,70,229,0.08);animation:stepPulse 1.6s infinite}
+.progress-step .meta{font-size:0.92rem;color:var(--text)}
+.progress-step .meta small{display:block;color:var(--muted);font-size:0.82rem}
+
+@keyframes stepPulse{0%{box-shadow:0 0 0 0 rgba(79,70,229,0.12)}50%{box-shadow:0 0 0 8px rgba(79,70,229,0.06)}100%{box-shadow:0 0 0 0 rgba(79,70,229,0.00)}}
+
+.candidate-journey{background:var(--surface);border:1px solid var(--card-border-color);border-radius:var(--radius);padding:20px;box-shadow:0 6px 22px rgba(11,38,64,0.04)}
+.timeline{display:flex;flex-direction:column;gap:18px}
+.timeline-item{display:flex;gap:14px;align-items:flex-start;padding:12px;border-radius:var(--radius);border:1px solid transparent;transition:transform .12s ease,box-shadow .12s ease}
+.timeline-item:hover{transform:translateY(-6px);box-shadow:0 12px 26px rgba(11,38,64,0.04);border-color:var(--card-border-color)}
+.timeline-item .dot{width:12px;height:12px;border-radius:50%;margin-top:6px;background:#CBD5E1}
+.timeline-item.passed .dot{background:var(--success)}
+.timeline-item.pending .dot{background:#F59E0B}
+.timeline-item .card{flex:1;background:#fff;border:1px solid var(--card-border-color);padding:12px;border-radius:var(--radius)}
+.timeline-item .card h4{margin:0;color:var(--text)}
+.timeline-item .card p{margin:6px 0;color:var(--muted)}
+.timeline-item .card .meta{display:flex;gap:8px;align-items:center;margin-top:8px}
+.badge-status{padding:6px 10px;border-radius:999px;font-weight:700;font-size:.82rem}
+.badge-status.pass{background:rgba(16,185,129,0.12);color:#059669}
+.badge-status.pending{background:rgba(245,158,11,0.10);color:#92400e}
+
+.action-sidebar{background:var(--surface);border:1px solid var(--card-border-color);border-radius:var(--radius);padding:18px;box-shadow:0 6px 18px rgba(11,38,64,0.03)}
+.action-list{display:flex;flex-direction:column;gap:12px}
+.action-item{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px;border-radius:var(--radius);background:#fff;border:1px solid var(--card-border-color)}
+.action-item .label{color:var(--text);font-weight:600}
+.action-item .hint{color:var(--muted);font-size:.9rem}
+
+.btn.primary{background:linear-gradient(90deg,var(--accent),var(--accent-variant));color:#fff;border:none}
+.btn.outline{background:transparent;border:1px solid var(--card-border-color);color:var(--text)}
+
+.toast-container{position:fixed;right:20px;bottom:20px;display:flex;flex-direction:column;gap:12px;z-index:9999}
+.toast{background:#fff;border:1px solid var(--card-border-color);padding:12px 14px;border-radius:8px;box-shadow:0 10px 30px rgba(11,38,64,0.06);display:flex;gap:12px;align-items:center}
+.toast.success{border-left:4px solid var(--success)}
+.toast.error{border-left:4px solid var(--danger)}
+
+
+

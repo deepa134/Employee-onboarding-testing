@@ -1,0 +1,128 @@
+<div class="auth-wrapper">
+  <div class="auth-card">
+    
+    <div class="auth-aside">
+      <div class="aside-content">
+        <div class="logo-badge">IC</div>
+        <h1>InternConnect</h1>
+        <p class="tagline">The complete ecosystem for modern recruitment and seamless onboarding.</p>
+        
+        <ul class="benefit-list">
+          <li><span>✓</span> Automated Interview Scheduling</li>
+          <li><span>✓</span> Dynamic Offer Generation</li>
+          <li><span>✓</span> Digital Onboarding Verification</li>
+        </ul>
+      </div>
+      <div class="aside-footer">
+        Platform v2.4.0 &copy; 2026
+      </div>
+    </div>
+
+    <div class="auth-main">
+      <div class="form-container">
+        <div class="form-header">
+          <h2>Secure Sign-in</h2>
+          <p>Welcome back! Please select your portal.</p>
+        </div>
+
+        <div class="role-selector">
+          <button type="button" [class.active]="role === 'CANDIDATE'" (click)="setRole('CANDIDATE')">
+            Candidate
+          </button>
+          <button type="button" [class.active]="role === 'HR'" (click)="setRole('HR')">
+            HR Admin
+          </button>
+          <button type="button" [class.active]="role === 'INTERVIEWER'" (click)="setRole('INTERVIEWER')">
+            Interviewer
+          </button>
+        </div>
+
+        <div class="form-fields">
+
+          <!-- Candidate Login -->
+          <div *ngIf="role === 'CANDIDATE'" class="field-group">
+
+            <label>Registered Email</label>
+            <input
+              type="email"
+              class="modern-input"
+              [(ngModel)]="email"
+              (blur)="checkEmail()"
+              placeholder="e.g. candidate@example.com"
+            />
+
+            <small class="hint">Use the email you used during application.</small>
+
+            <!-- If email not registered -->
+            <div *ngIf="!emailExists" style="color:red;margin-top:10px;">
+              Email not registered
+            </div>
+
+            <button *ngIf="!emailExists"
+        class="btn-submit"
+        style="margin-top:10px;"
+        (click)="goToRegister()">
+  Register
+</button>
+
+            <!-- Password only if email exists -->
+            <label *ngIf="emailExists" class="mt-4">Password</label>
+
+            <input *ngIf="emailExists"
+              type="password"
+              class="modern-input"
+              [(ngModel)]="password"
+              placeholder="Enter your password" />
+
+          </div>
+
+          <!-- HR Login -->
+          <div *ngIf="role === 'HR'" class="field-group">
+            <div class="admin-notice">
+              <strong>Admin Access:</strong> You are entering the HR Management Console. System activities are logged.
+            </div>
+
+            <label class="mt-4">Admin Email</label>
+            <input type="email" class="modern-input"
+              [(ngModel)]="email"
+              placeholder="admin@gmail.com" />
+
+            <label class="mt-4">Admin Password</label>
+            <input type="password" class="modern-input"
+              [(ngModel)]="password"
+              placeholder="Enter admin password" />
+          </div>
+
+          <!-- Interviewer Login -->
+          <div *ngIf="role === 'INTERVIEWER'" class="field-group">
+            <label>Interviewer Profile</label>
+            <select class="modern-input" [(ngModel)]="name">
+              <option value="">-- Choose Profile --</option>
+              <option value="Kavya">Kavya</option>
+              <option value="Arun">Arun</option>
+              <option value="Divya">Divya</option>
+            </select>
+            
+            <label class="mt-4">Interviewer Password</label>
+            <input type="password" class="modern-input"
+              [(ngModel)]="password"
+              placeholder="••••••••" />
+          </div>
+
+          <button class="btn-submit" (click)="handleLogin()">
+            Continue to {{ role | titlecase }} Dashboard
+            <svg class="icon" width="20" height="20" fill="none"
+              stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+            </svg>
+          </button>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

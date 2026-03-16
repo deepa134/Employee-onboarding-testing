@@ -1,0 +1,20 @@
+<div class="container" style="padding-top:28px;padding-bottom:28px">
+  <h2>Employee Onboarding Form</h2>
+  <form (ngSubmit)="handleSubmit()" class="stack" style="max-width:420px">
+    <label class="form-label">Address</label>
+    <input class="form-control" name="address" placeholder="Address" [(ngModel)]="formData.address" required />
+
+    <label class="form-label">Aadhaar Number</label>
+    <input class="form-control" name="aadhaar" placeholder="Aadhaar Number" [(ngModel)]="formData.aadhaar" required />
+
+    <label class="form-label">PAN Number</label>
+    <input class="form-control" name="pan" placeholder="PAN Number" [(ngModel)]="formData.pan" required />
+
+    <label class="form-label">Bank Account</label>
+    <input class="form-control" name="bankAccount" placeholder="Bank Account Number" [(ngModel)]="formData.bankAccount" required />
+
+    <div class="form-actions">
+      <button class="btn" type="submit">Submit</button>
+    </div>
+  </form>
+</div>

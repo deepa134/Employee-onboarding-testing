@@ -77,3 +77,86 @@ test("email verification flow", async ({ page, request }) => {
   await expect(page).not.toHaveURL(/login/);
 
 });
+// =====================================================
+// ❌ NEGATIVE — WRONG PASSWORD
+// =====================================================
+
+test("negative - wrong password", async ({ page }) => {
+
+  await page.goto("http://localhost:4200/login");
+
+  await page.locator('input[name="loginEmail"]').fill("test@mail.com");
+
+  await page.locator('input[name="loginPassword"]').fill("wrong123");
+
+  await page.getByText("Continue to Candidate").click();
+
+  await expect(page.locator(".toast")).toBeVisible();
+
+});
+
+
+// =====================================================
+// ❌ NEGATIVE — EMPTY LOGIN
+// =====================================================
+
+test("negative - empty login", async ({ page }) => {
+
+  await page.goto("http://localhost:4200/login");
+
+  await page.getByText("Continue to Candidate").click();
+
+  await expect(page.locator(".toast")).toBeVisible();
+
+});
+
+
+// =====================================================
+// ❌ NEGATIVE — LOGIN WITHOUT VERIFY
+// =====================================================
+
+test("negative - login without verify", async ({ page }) => {
+
+  const email = `test${Date.now()}@mail.com`;
+  const password = "123456";
+
+  await page.goto("http://localhost:4200/register");
+
+  await page.fill('input[placeholder="Enter email"]', email);
+  await page.fill('input[placeholder="Enter password"]', password);
+
+  await page.locator("button").last().click();
+
+  await page.waitForTimeout(2000);
+
+
+  await page.goto("http://localhost:4200/login");
+
+  await page.locator('input[name="loginEmail"]').fill(email);
+
+  await page.locator('input[name="loginPassword"]').fill(password);
+
+  await page.getByText("Continue to Candidate").click();
+
+  await expect(page.locator(".toast")).toBeVisible();
+
+});
+
+
+// =====================================================
+// ❌ NEGATIVE — INVALID EMAIL FORMAT
+// =====================================================
+
+test("negative - invalid email format", async ({ page }) => {
+
+  await page.goto("http://localhost:4200/login");
+
+  await page.locator('input[name="loginEmail"]').fill("abc");
+
+  await page.locator('input[name="loginPassword"]').fill("123456");
+
+  await page.getByText("Continue to Candidate").click();
+
+  await expect(page.locator(".toast")).toBeVisible();
+
+});

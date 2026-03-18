@@ -1,0 +1,22 @@
+{
+  "name": "employee-onboarding-testing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deepa134/Employee-onboarding-testing.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/deepa134/Employee-onboarding-testing/issues"
+  },
+  "homepage": "https://github.com/deepa134/Employee-onboarding-testing#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "@types/node": "^25.5.0"
+  }
+}

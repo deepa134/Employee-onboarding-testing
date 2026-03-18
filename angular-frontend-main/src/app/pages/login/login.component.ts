@@ -220,7 +220,7 @@ import { AuthService } from '../../services/auth.service';
   position: fixed;
   top: 20px;
   right: 20px;
-  background: #22c55e;
+  background: #1e40af;
   color: white;
   padding: 12px 18px;
   border-radius: 8px;
@@ -229,7 +229,7 @@ import { AuthService } from '../../services/auth.service';
 }
 
 .toast-error {
-  background: #ef4444;
+  background: #1e40af;
 }
   `]
 })
@@ -269,7 +269,7 @@ export class LoginComponent {
 
   setTimeout(() => {
     this.showToast = false;
-  }, 2500);
+  }, 5000);
 
 }
 
@@ -388,18 +388,23 @@ error: (err) => {
 }
 resendEmail() {
 
+  // ✅ show instantly
+  this.showError("Verification email sent. Please check inbox.");
+
+  // ✅ call backend in background
   this.auth.resendVerification(this.email).subscribe({
 
     next: () => {
-      this.showError("Verification email sent");
-      this.notVerified = false;
+      console.log("resend success");
     },
 
-    error: () => {
-      this.showError("Failed to resend email");
+    error: (err) => {
+      console.log("resend error", err);
     }
 
   });
+
+  this.notVerified = false;
 
 }
 

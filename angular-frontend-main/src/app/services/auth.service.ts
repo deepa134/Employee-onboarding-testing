@@ -60,11 +60,12 @@ export class AuthService {
       candidate
     );
   }
- resendVerification(email: string) {
+resendVerification(email: string) {
 
   return this.http.post(
     "http://localhost:8080/api/candidate/resend?email=" + email,
-    {}
+    {},
+    { responseType: 'text' }   // ✅ FIX
   );
 
 }

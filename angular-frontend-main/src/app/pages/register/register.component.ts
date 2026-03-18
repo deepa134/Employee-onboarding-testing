@@ -74,7 +74,7 @@ import { AuthService } from '../../services/auth.service';
       position: fixed;
       top: 20px;
       right: 20px;
-      background: #22c55e;
+      background: #1e40af;
       color: white;
       padding: 12px 18px;
       border-radius: 8px;

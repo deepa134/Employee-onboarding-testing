@@ -1,5 +1,7 @@
 package com.onboard.onboarding.entities;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,5 +20,13 @@ public class Candidate {
     private String email;
     private String phone;
 
-    private String password;   // ✅ NEW FIELD
+    private String password; 
+      // ✅ NEW FIELD
+       private boolean emailVerified = false;
+
+    // ✅ token
+    private String verificationToken;
+
+    // ✅ expiry time
+    private LocalDateTime tokenExpiry;
 }

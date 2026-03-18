@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface CandidateRepository extends JpaRepository<Candidate, Long> {
 
     Optional<Candidate> findByEmail(String email); // ✅ NEW
+     Optional<Candidate> findByVerificationToken(String token);
 }

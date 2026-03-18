@@ -15,6 +15,7 @@ import { HrOnboardingDetailsComponent } from './pages/hr/hr-onboarding-details.c
 import { HrCreateEmployeeComponent } from './pages/hr/hr-create-employee.component';
 import { HrEmployeeDetailsComponent } from './pages/hr/hr-employee-details.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { VerifyComponent } from './components/verify/verify.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { RegisterComponent } from './pages/register/register.component';
     HrDashboardComponent,
     HrOnboardingDetailsComponent,
     HrCreateEmployeeComponent,
-    HrEmployeeDetailsComponent
+    HrEmployeeDetailsComponent,
+    VerifyComponent
   ],
   imports: [
     BrowserModule,

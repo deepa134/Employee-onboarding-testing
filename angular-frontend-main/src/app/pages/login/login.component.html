@@ -1,3 +1,10 @@
+<div
+  *ngIf="showToast"
+  class="toast"
+  [ngClass]="{'toast-error': isError}"
+>
+  {{toastMessage}}
+</div>
 <div class="auth-wrapper">
   <div class="auth-card">
     
@@ -43,13 +50,16 @@
           <div *ngIf="role === 'CANDIDATE'" class="field-group">
 
             <label>Registered Email</label>
-            <input
-              type="email"
-              class="modern-input"
-              [(ngModel)]="email"
-              (blur)="checkEmail()"
-              placeholder="e.g. candidate@example.com"
-            />
+           
+<input
+  type="email"
+  class="modern-input"
+  [(ngModel)]="email"
+  (blur)="checkEmail()"
+  autocomplete="off"
+  name="loginEmail"
+  placeholder="e.g. candidate@example.com"
+/>
 
             <small class="hint">Use the email you used during application.</small>
 
@@ -68,12 +78,33 @@
             <!-- Password only if email exists -->
             <label *ngIf="emailExists" class="mt-4">Password</label>
 
-            <input *ngIf="emailExists"
-              type="password"
-              class="modern-input"
-              [(ngModel)]="password"
-              placeholder="Enter your password" />
+           <input *ngIf="emailExists"
+  type="password"
+  class="modern-input"
+  [(ngModel)]="password"
+  placeholder="Enter your password"
+  autocomplete="new-password"
+  name="loginPassword"
+/>
+<div *ngIf="notVerified" style="margin-top:10px">
 
+  <button
+    style="
+      background:#4f46e5;
+      color:white;
+      border:none;
+      padding:6px 10px;
+      border-radius:6px;
+      cursor:pointer;
+    "
+    (click)="resendEmail()"
+  >
+
+    Resend verification email
+
+  </button>
+
+</div>
           </div>
 
           <!-- HR Login -->

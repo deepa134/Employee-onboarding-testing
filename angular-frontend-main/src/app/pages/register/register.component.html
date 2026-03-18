@@ -1,16 +1,65 @@
-<div style="padding:40px;max-width:400px;margin:auto">
+<div
+  *ngIf="showToast"
+  class="toast"
+  [ngClass]="{'toast-error': isError}"
+>
+  {{toastMessage}}
+</div>
+<div class="auth-wrapper">
 
-<h2>Candidate Register</h2>
+  <div class="auth-card">
 
-<label>Name</label>
-<input [(ngModel)]="name" class="modern-input"><br><br>
+    <div class="auth-aside">
+      <h2>InternConnect</h2>
+      <p>Create your account to continue onboarding</p>
+    </div>
 
-<label>Email</label>
-<input [(ngModel)]="email" class="modern-input"><br><br>
+    <div class="auth-main">
 
-<label>Password</label>
-<input type="password" [(ngModel)]="password" class="modern-input"><br><br>
+      <h2>Register to continue</h2>
 
-<button class="btn-submit" (click)="register()">Register</button>
+      <form autocomplete="off">
+
+        <label>Name</label>
+        <input
+          class="modern-input"
+          [(ngModel)]="name"
+          name="reg_name_123"
+          autocomplete="off"
+          placeholder="Enter name"
+        />
+
+        <label>Email</label>
+        <input
+          class="modern-input"
+          [(ngModel)]="email"
+          name="reg_email_456"
+          autocomplete="off"
+          placeholder="Enter email"
+        />
+
+        <label>Password</label>
+        <input
+          type="password"
+          class="modern-input"
+          [(ngModel)]="password"
+          name="reg_pass_789"
+          autocomplete="new-password"
+          placeholder="Enter password"
+        />
+
+        <button
+          type="button"
+          class="btn-submit"
+          (click)="register()"
+        >
+          Register
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
 
 </div>

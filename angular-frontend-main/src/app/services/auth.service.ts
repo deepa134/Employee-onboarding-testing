@@ -47,6 +47,12 @@ export class AuthService {
       'http://localhost:8080/api/candidate/check-email?email=' + email
     );
   }
+  verifyEmail(token: string) {
+  return this.http.get(
+    "http://localhost:8080/api/candidate/verify?token=" + token,
+    { responseType: 'text' }
+  );
+}
 
   registerCandidate(candidate:any){
     return this.http.post(
@@ -54,4 +60,12 @@ export class AuthService {
       candidate
     );
   }
+ resendVerification(email: string) {
+
+  return this.http.post(
+    "http://localhost:8080/api/candidate/resend?email=" + email,
+    {}
+  );
+
+}
 }

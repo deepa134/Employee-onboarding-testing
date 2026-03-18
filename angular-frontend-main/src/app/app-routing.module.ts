@@ -12,12 +12,13 @@ import { HrCreateEmployeeComponent } from './pages/hr/hr-create-employee.compone
 import { HrEmployeeDetailsComponent } from './pages/hr/hr-employee-details.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { AuthGuard } from './guards/auth.guard';
-
+import { VerifyComponent } from './components/verify/verify.component';
 const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'login', component: LoginComponent },
 
   { path: 'register', component: RegisterComponent },
+  { path: 'verify', component: VerifyComponent },
 
   { path: 'hr/dashboard', component: HrDashboardComponent, canActivate: [AuthGuard], data: { role: 'HR' } },
   { path: 'candidate/dashboard', component: CandidateDashboardComponent, canActivate: [AuthGuard], data: { role: 'CANDIDATE' } },

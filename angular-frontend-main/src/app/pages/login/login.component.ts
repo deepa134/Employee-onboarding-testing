@@ -216,6 +216,21 @@ import { AuthService } from '../../services/auth.service';
         max-width: 500px;
       }
     }
+      .toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #22c55e;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-weight: 500;
+  z-index: 9999;
+}
+
+.toast-error {
+  background: #ef4444;
+}
   `]
 })
 export class LoginComponent {
@@ -225,6 +240,10 @@ export class LoginComponent {
   name = '';
   password = '';
   emailExists = true;
+  showToast = false;
+  toastMessage = '';
+  isError = false;
+  notVerified = false;
 
   interviewers = {
     Kavya: { id: 1, password: 'kavya123' },
@@ -233,10 +252,26 @@ export class LoginComponent {
   };
 
   constructor(private auth: AuthService, private router: Router) {}
+  ngOnInit() {
+  this.email = '';
+  this.password = '';
+  this.name = '';
+}
 
   setRole(r: string) {
     this.role = r;
   }
+  showError(msg: string) {
+
+  this.toastMessage = msg;
+  this.isError = true;
+  this.showToast = true;
+
+  setTimeout(() => {
+    this.showToast = false;
+  }, 2500);
+
+}
 
   handleLogin() {
 
@@ -244,37 +279,64 @@ export class LoginComponent {
     if (this.role === 'CANDIDATE') {
 
       if (!this.email) {
-        alert('Enter email');
+        this.showError('Enter email');
         return;
       }
 
       // NEW CONDITION
       if (!this.emailExists) {
-        alert('Email not registered. Please register first.');
+        this.showError('Email not registered. Please register first.');
         return;
       }
 
       if (!this.password) {
-        alert('Enter password');
+        this.showError('Enter password');
         return;
       }
 
       const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
       if (!emailPattern.test(this.email)) {
-        alert('Enter valid email address');
+        this.showError('Enter valid email address');
         return;
       }
-
       this.auth.loginCandidate(this.email, this.password).subscribe({
-        next: () => {
-          this.auth.login('CANDIDATE', { email: this.email });
-          this.router.navigate(['/candidate/dashboard']);
-        },
-        error: () => {
-          alert('Invalid email or password');
-        }
-      });
+  next: () => {
+    this.auth.login('CANDIDATE', { email: this.email });
+    this.router.navigate(['/candidate/dashboard']);
+  },
+error: (err) => {
+
+  console.log("LOGIN ERROR", err);
+
+  let msg = "";
+
+  if (err.error) {
+
+    if (typeof err.error === "string") {
+      msg = err.error;
+    }
+    else if (err.error.message) {
+      msg = err.error.message;
+    }
+
+  }
+
+  if (!msg) {
+    msg = "Login failed";
+  }
+
+  this.showError(msg);
+
+  // ✅ detect email not verified
+  if (msg.toLowerCase().includes("verify")) {
+    this.notVerified = true;
+  } else {
+    this.notVerified = false;
+  }
+
+}
+});
 
     }
 
@@ -323,6 +385,22 @@ export class LoginComponent {
   }
   goToRegister(){
   this.router.navigate(['/register']);
+}
+resendEmail() {
+
+  this.auth.resendVerification(this.email).subscribe({
+
+    next: () => {
+      this.showError("Verification email sent");
+      this.notVerified = false;
+    },
+
+    error: () => {
+      this.showError("Failed to resend email");
+    }
+
+  });
+
 }
 
 }
